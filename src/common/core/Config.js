@@ -18,8 +18,7 @@ const Config = (() => {
   // === MUTATION METHODS ===
 
   function set(key, value) {
-    if (_isFrozen) return false;
-    if (typeof key !== 'string') return false;
+    if (_isFrozen || typeof key !== 'string') return false;
     _config.set(key, value);
     _isDirty = true;
     return true;
@@ -33,9 +32,10 @@ const Config = (() => {
   }
 
   function clear() {
-    if (_isFrozen) return;
+    if (_isFrozen) return false;
     _config.clear();
     _isDirty = false;
+    return true;
   }
 
   // === RETRIEVAL METHODS ===
