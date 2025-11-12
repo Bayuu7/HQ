@@ -1,0 +1,13 @@
+name: Security Scan
+
+on: [push]
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Run Bandit (Python security linter)
+      run: pip install bandit && bandit -r src
+    - name: Run npm audit (JS security scan)
+      run: npm install && npm audit --audit-level=moderate
